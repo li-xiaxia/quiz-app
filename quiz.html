@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>答题页面</title>
+</head>
+
+<body>
+    <h1>答题测试，含单选、多选、积分与排名</h1>
+    <form id="quizForm">
+        <!-- 单选题 -->
+        <p>单选题 1：Python 是以下哪种类型的语言？（本题 20 分）</p>
+        <input type="radio" id="q1option1" name="q1answer" value="A">
+        <label for="q1option1">A. 编译型语言</label><br>
+        <input type="radio" id="q1option2" name="q1answer" value="B">
+        <label for="q1option2">B. 解释型语言</label><br>
+        <input type="radio" id="q1option3" name="q1answer" value="C">
+        <label for="q1option3">C. 汇编语言</label><br>
+        <input type="radio" id="q1option4" name="q1answer" value="D">
+        <label for="q1option4">D. 机器语言</label><br>
+
+        <p>单选题 2：以下哪个不是 Python 的内置函数？（本题 20 分）</p>
+        <input type="radio" id="q2option1" name="q2answer" value="A">
+        <label for="q2option1">A. print</label><br>
+        <input type="radio" id="q2option2" name="q2answer" value="B">
+        <label for="q2option2">B. add</label><br>
+        <input type="radio" id="q2option3" name="q2answer" value="C">
+        <label for="q2option3">C. len</label><br>
+        <input type="radio" id="q2option4" name="q2answer" value="D">
+        <label for="q2option4">D. type</label><br>
+
+        <!-- 多选题 -->
+        <p>多选题 1：以下哪些是 Python 的数据类型？（本题 30 分）</p>
+        <input type="checkbox" id="q3option1" name="q3answer" value="A">
+        <label for="q3option1">A. 整数</label><br>
+        <input type="checkbox" id="q3option2" name="q3answer" value="B">
+        <label for="q3option2">B. 字符</label><br>
+        <input type="checkbox" id="q3option3" name="q3answer" value="C">
+        <label for="q3option3">C. 列表</label><br>
+        <input type="checkbox" id="q3option4" name="q3answer" value="D">
+        <label for="q3option4">D. 布尔值</label><br>
+
+        <p>多选题 2：Python 中用于控制流的关键字有？（本题 30 分）</p>
+        <input type="checkbox" id="q4option1" name="q4answer" value="A">
+        <label for="q4option1">A. for</label><br>
+        <input type="checkbox" id="q4option2" name="q4answer" value="B">
+        <label for="q4option2">B. if</label><br>
+        <input type="checkbox" id="q4option3" name="q4answer" value="C">
+        <label for="q4option3">C. switch</label><br>
+        <input type="checkbox" id="q4option4" name="q4answer" value="D">
+        <label for="q4option4">D. while</label><br>
+
+        <input type="submit" value="提交答案">
+    </form>
+
+    <script>
+        const quizForm = document.getElementById('quizForm');
+        let scores = [];
+
+        quizForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let totalScore = 0;
+
+            // 计算单选题得分
+            const q1Answer = document.querySelector('input[name="q1answer"]:checked');
+            if (q1Answer && q1Answer.value === 'B') {
+                totalScore += 20;
+            }
+            const q2Answer = document.querySelector('input[name="q2answer"]:checked');
+            if (q2Answer && q2Answer.value === 'B') {
+                totalScore += 20;
+            }
+
+            // 计算多选题得分
+            const q3Answers = Array.from(document.querySelectorAll('input[name="q3answer"]:checked')).map(option => option.value);
+            const correctQ3Answers = ['A', 'C', 'D'];
+            if (q3Answers.length === correctQ3Answers.length && q3Answers.every(answer => correctQ3Answers.includes(answer))) {
+                totalScore += 30;
+            }
+            const q4Answers = Array.from(document.querySelectorAll('input[name="q4answer"]:checked')).map(option => option.value);
+            const correctQ4Answers = ['A', 'B', 'D'];
+            if (q4Answers.length === correctQ4Answers.length && q4Answers.every(answer => correctQ4Answers.includes(answer))) {
+                totalScore += 30;
+            }
+
+            scores.push(totalScore);
+            scores.sort((a, b) => b - a);
+
+            // 保存得分到本地存储
+            localStorage.setItem('totalScore', totalScore);
+            localStorage.setItem('scores', JSON.stringify(scores));
+
+            // 页面跳转
+            window.location.href ='result.html';
+        });
+    </script>
+</body>
+
+</html>
