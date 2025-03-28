@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>答题结果</title>
+</head>
+
+<body>
+    <h1>答题结果</h1>
+    <div id="result"></div>
+    <div id="ranking"></div>
+
+    <script>
+        const totalScore = localStorage.getItem('totalScore');
+        const scores = JSON.parse(localStorage.getItem('scores'));
+
+        const resultDiv = document.getElementById('result');
+        const rankingDiv = document.getElementById('ranking');
+
+        resultDiv.textContent = `你的总得分是：${totalScore} 分。`;
+
+        let rankingText = '排名：<br>';
+        scores.forEach((score, index) => {
+            rankingText += `${index + 1}. ${score} 分<br>`;
+        });
+        rankingDiv.innerHTML = rankingText;
+    </script>
+</body>
+
+</html>
